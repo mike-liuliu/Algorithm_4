@@ -1,0 +1,3 @@
+
+g++ -shared -o cal_mmj_no_csv_mac.so -fPIC cal_mmj.cpp
+
