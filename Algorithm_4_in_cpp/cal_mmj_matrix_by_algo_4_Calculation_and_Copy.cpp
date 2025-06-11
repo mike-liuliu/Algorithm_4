@@ -13,17 +13,9 @@
 
 using namespace std;
 
-// Helper function to print a matrix
-void printMatrix(const vector<vector<double>>& matrix, const string& name) {
-    cout << name << ":" << endl;
-    for (const auto& row : matrix) {
-        for (double value : row) {
-            cout << fixed << setprecision(6) << value << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
+using Matrix = vector<vector<double>>;
+constexpr double INF = numeric_limits<double>::infinity();
+using Edge = tuple<int, int, double>; // (u, v, weight)
 
 // Helper function to compare two matrices
 bool areMatricesEqual(const vector<vector<double>>& matrix1, const vector<vector<double>>& matrix2) {
@@ -41,53 +33,33 @@ bool areMatricesEqual(const vector<vector<double>>& matrix1, const vector<vector
     return true;
 }
 
-// Class to construct MST using Prim's algorithm
-class PrimMST {
-public:
-    int V;
-    vector<vector<double>> graph;
 
-    PrimMST(int vertices) : V(vertices), graph(vertices, vector<double>(vertices, 0)) {}
+// Prim's MST with min-heap optimization
+vector<int> primMST(const Matrix& dist) {
+    int V = dist.size();
+    vector<double> key(V, INF);
+    vector<int> parent(V, -1);
+    vector<bool> inMST(V, false);
 
-    vector<tuple<int, int, double>> constructMST() {
-        vector<double> key(V, numeric_limits<double>::max());
-        vector<int> parent(V, -1);
-        vector<bool> mstSet(V, false);
-        key[0] = 0;
+    key[0] = 0.0;
+    priority_queue<pair<double, int>, vector<pair<double, int>>, greater<>> pq;
+    pq.emplace(0.0, 0);
 
-        for (int count = 0; count < V - 1; count++) {
-            int u = minKey(key, mstSet);
-            mstSet[u] = true;
+    while (!pq.empty()) {
+        auto [k, u] = pq.top(); pq.pop();
+        if (inMST[u]) continue;
+        inMST[u] = true;
 
-            for (int v = 0; v < V; v++) {
-                if (graph[u][v] && !mstSet[v] && graph[u][v] < key[v]) {
-                    parent[v] = u;
-                    key[v] = graph[u][v];
-                }
+        for (int v = 0; v < V; ++v) {
+            if (dist[u][v] && !inMST[v] && dist[u][v] < key[v]) {
+                key[v] = dist[u][v];
+                parent[v] = u;
+                pq.emplace(key[v], v);
             }
         }
-
-        vector<tuple<int, int, double>> MST;
-        for (int i = 1; i < V; i++) {
-            MST.emplace_back(parent[i], i, graph[i][parent[i]]);
-        }
-        return MST;
     }
-
-private:
-    int minKey(const vector<double>& key, const vector<bool>& mstSet) {
-        double min = numeric_limits<double>::max();
-        int min_index = -1;
-
-        for (int v = 0; v < V; v++) {
-            if (!mstSet[v] && key[v] < min) {
-                min = key[v];
-                min_index = v;
-            }
-        }
-        return min_index;
-    }
-};
+    return parent;
+}
 
 vector<vector<double>> create_symmetric_distance_matrix(int N, int seed) {
     mt19937 gen(seed);
@@ -129,9 +101,13 @@ vector<vector<double>> calculateMMJMatrixAlgo4(const vector<vector<double>>& dis
     vector<vector<double>> mmjMatrix(n, vector<double>(n, 0));
 
     // Construct MST
-    PrimMST mst(n);
-    mst.graph = distanceMatrix;
-    auto mstEdges = mst.constructMST();
+ 
+    auto parent = primMST(distanceMatrix);
+
+    vector<Edge> mstEdges;
+    for (int i = 1; i < n; ++i)
+        mstEdges.emplace_back(min(i, parent[i]), max(i, parent[i]), distanceMatrix[i][parent[i]]);
+ 
 
     // Sort edges by weight in descending order
     sort(mstEdges.begin(), mstEdges.end(), [](const auto& a, const auto& b) {
@@ -193,9 +169,10 @@ int main() {
     auto mmjMatrixAlgo4 = calculateMMJMatrixAlgo4(distanceMatrix);
     auto end = chrono::high_resolution_clock::now();
     cout << "Time used (Algorithm 4): " << chrono::duration<double>(end - start).count() << " seconds" << endl;
-    for (int i = n - 30; i < n; ++i)
-        cout << mmjMatrixAlgo4[0][i] << " ";
-    cout << endl;
+     const auto& row = mmjMatrixAlgo4[0];
+    for (size_t i = row.size() - 30; i < row.size(); ++i)
+        cout << fixed << setprecision(1) << row[i] << " ";
+    cout << "\n";
 
     return 0;
 }
