@@ -89,23 +89,23 @@ private:
     }
 };
 
-// Create a random distance matrix
-vector<vector<double>> createDistanceMatrix(int N) {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> dist(1, 1000);
+vector<vector<double>> create_symmetric_distance_matrix(int N, int seed) {
+    mt19937 gen(seed);
+    uniform_int_distribution<> dist(1, 999);
+    vector<vector<double>> A(N, vector<double>(N));
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < N; j++)
+            A[i][j] = dist(gen);
 
-    vector<vector<double>> distanceMatrix(N, vector<double>(N, 0));
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            if (i < j) {
-                double weight = dist(gen);
-                distanceMatrix[i][j] = weight;
-                distanceMatrix[j][i] = weight;
-            }
-        }
-    }
-    return distanceMatrix;
+    vector<vector<double>> sym_A(N, vector<double>(N));
+    for (int i = 0; i < N; ++i)
+        for (int j = 0; j < N; ++j)
+            sym_A[i][j] = floor((A[i][j] + A[j][i]) / 2.0);
+
+    for (int i = 0; i < N; ++i)
+        sym_A[i][i] = 0.0;
+
+    return sym_A;
 }
 
 // MMJ matrix calculation using Floyd-Warshall variant
@@ -178,34 +178,24 @@ vector<vector<double>> calculateMMJMatrixAlgo4(const vector<vector<double>>& dis
 }
 
 int main() {
-    int N = 10000;
-    auto distanceMatrix = createDistanceMatrix(N);
-    cout << N << endl;
+
+    int n = 10000;
+    int seed = 222;
+
+    cout << n << endl;
+
+    auto distanceMatrix = create_symmetric_distance_matrix(n, seed);
+
+    cout << n << endl;
+
+ 
     auto start = chrono::high_resolution_clock::now();
     auto mmjMatrixAlgo4 = calculateMMJMatrixAlgo4(distanceMatrix);
     auto end = chrono::high_resolution_clock::now();
     cout << "Time used (Algorithm 4): " << chrono::duration<double>(end - start).count() << " seconds" << endl;
-
-    // int N = 100;
-    // auto distanceMatrix = createDistanceMatrix(N);
-    // cout << N << endl;    
-    // auto start = chrono::high_resolution_clock::now();
-    // auto mmjMatrixFloydWarshall = calculateMMJMatrixFloydWarshall(distanceMatrix);
-    // auto end = chrono::high_resolution_clock::now();
- 
-    // cout << "Time used (Floyd-Warshall): " << chrono::duration<double>(end - start).count() << " seconds" << endl;
-
-    // start = chrono::high_resolution_clock::now();
-    // auto mmjMatrixAlgo4 = calculateMMJMatrixAlgo4(distanceMatrix);
-    // end = chrono::high_resolution_clock::now();
-    // cout << "Time used (Algorithm 4): " << chrono::duration<double>(end - start).count() << " seconds" << endl;
-
-    // // Compare the two matrices
-    // if (areMatricesEqual(mmjMatrixFloydWarshall, mmjMatrixAlgo4)) {
-    //     cout << "The matrices are equal!" << endl;
-    // } else {
-    //     cout << "The matrices are NOT equal!" << endl;
-    // }
+    for (int i = n - 30; i < n; ++i)
+        cout << mmjMatrixAlgo4[0][i] << " ";
+    cout << endl;
 
     return 0;
 }
