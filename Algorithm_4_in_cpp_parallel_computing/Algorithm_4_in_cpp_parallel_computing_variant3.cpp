@@ -164,7 +164,8 @@ Matrix cal_mmj_matrix_by_algo_4_Calculation_and_Copy_parallel_compu(const Matrix
     Matrix mmj_matrix(n, vector<double>(n, 0.0));
     queue<int> task_queue;
     mutex queue_mutex;
-    int num_W = 3000;
+    // int num_W = 3000;
+    int num_W = int(n * 0.3);
 
     cout << "num_W: " << num_W << endl;
 
