@@ -257,10 +257,10 @@ Matrix cal_mmj_matrix_by_algo_4_Calculation_and_Copy_parallel_compu(const Matrix
                                 ref(queue_mutex));
  
 
-    auto start4 = chrono::high_resolution_clock::now();
-    auto MST_ttt = base_mst;
-    auto end4 = chrono::high_resolution_clock::now();
-
+    // This part tests how long it takes to copy a MST.
+    // auto start4 = chrono::high_resolution_clock::now();
+    // auto MST_ttt = base_mst;
+    // auto end4 = chrono::high_resolution_clock::now();
     // cout << "Time used copy mst: " << chrono::duration<double>(end4 - start4).count() << " seconds\n";
 
 
