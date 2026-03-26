@@ -15,6 +15,8 @@ License of new data: Creative Commons Attribution 4.0 International
       url={https://arxiv.org/abs/2407.07058}, 
 }
 
+3. The formal name of Algorithm 4 is "Gangli's Algorithm 4 (MMJ distance by Calculation and Copy)." My other algorithms are named in a similar manner, such as Algorithm 1 (MMJ distance by recursion), Algorithm 7 (warm-start calculation of shortest path), and Algorithm 13 (APPD accelerated by parallel computing).
+
  
 
 
