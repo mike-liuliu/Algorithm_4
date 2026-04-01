@@ -1,0 +1,57 @@
+List of Gangli's algorithms:
+
+Algorithm name,                                                                         Introduced in
+Algorithm 1 (MMJ distance by recursion),                                                Paper 2
+Algorithm 2 (MMJ distance by Estimation and Copy),                                      Paper 2
+Algorithm 3 (Sample one path by stochastic greedy),                                     Paper 2
+Algorithm 4 (MMJ distance by Calculation and Copy),                                     Paper 2
+Algorithm 5 (APSP after removing a node),                                               Paper 4
+Algorithm 6 (APSP after modifying an edge),                                             Paper 4
+Algorithm 7 (warm-start calculation of shortest path),                                  Paper 4
+Algorithm 8 (warm-start calculation of all shortest paths),                             Paper 4
+Algorithm 9 (Cold-start calculation of all shortest paths on undirected graph),         Paper 4
+Algorithm 10 (warm-start calculation of APSP by key_node_list),                         Paper 4
+Algorithm 11 (APSP by key_node_list and Corollary 3.7),                                 Paper 4
+Algorithm 12 (APSP by Theorem 4.2 and Corollary 3.7),                                   Paper 4
+Algorithm 13 (APPD accelerated by parallel computing),                                  Paper 3
+Algorithm 14 Step Back to See a Bigger Picture (SBSBP),                                 Paper 1
+
+
+
+
+
+Paper 1:
+@article{liu2022clustering,
+  title={Clustering with Neural Network and Index},
+  author={Liu, Gangli},
+  journal={arXiv preprint arXiv:2212.03853},
+  year={2022}
+}
+
+
+Paper 2:
+@article{liu2023min,
+  title={Min-Max-Jump distance and its applications},
+  author={Liu, Gangli},
+  journal={arXiv preprint arXiv:2301.05994},
+  year={2023}
+}
+
+
+Paper 3:
+@article{liu2024efficient,
+      title={An efficient implementation for solving the all pairs minimax path problem in an undirected dense graph}, 
+      author={Liu, Gangli},
+      journal={arXiv preprint arXiv:2407.07058},
+      year={2024},
+      url={https://arxiv.org/abs/2407.07058}, 
+}
+
+Paper 4:
+@article{liu2024solving,
+  title={Solving the all pairs shortest path problem after minor update of a large dense graph},
+  author={Liu, Gangli},
+  journal={arXiv preprint arXiv:2412.15122},
+  year={2024},
+  url={https://arxiv.org/abs/2412.15122},
+}
