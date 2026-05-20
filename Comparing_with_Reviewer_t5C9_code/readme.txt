@@ -7,11 +7,9 @@ The files in this folder compare several variants of Algorithm 13 with Reviewer 
 
 Conclusion summary:
 
-1. It seems Variant 1 of Algorithm 13 is faster than other variants. 
-
-2. Variant 1 of Algorithm 13 appears to be slower than the Python version of Reviewer t5C9's code (which is accelerated by Numba), but faster than its C++ version. However, Reviewer t5C9’s code/algorithm requires significantly more memory. For example, under the current 30 GB memory limit on Kaggle (as of July 2025):
+Algorithm 13 appears to be slower than the Python version of Reviewer t5C9's code (which is accelerated by Numba), but faster than its C++ version. However, Reviewer t5C9’s code/algorithm requires significantly more memory. For example, under the current 30 GB memory limit on Kaggle (as of July 2025):
 - The Python version of Reviewer t5C9’s code can handle graphs with up to ~36,000 nodes.
 - The C++ version can process graphs with up to ~38,000 nodes.
-- In contrast, Variant 1 of Algorithm 13 can handle graphs with up to ~44,000 nodes.
+- In contrast, Algorithm 13 can handle graphs with up to ~44,000 nodes.
 
  
